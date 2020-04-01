@@ -74,12 +74,6 @@ public:
                     mp.erase(v[i].h);
                 }
             }
-            /*cout << "--------------------------" << endl;
-            for(auto it = mp.begin();it!=mp.end();it++)
-            {
-                cout << it->F << " " << it->S << endl;
-            }
-            cout << "--------------------------" << endl;*/
             if(mp.empty())
             {
                 ans.pb({v[i].x,0});
