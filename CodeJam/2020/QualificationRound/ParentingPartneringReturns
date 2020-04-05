@@ -1,0 +1,88 @@
+#include <bits/stdc++.h>
+#define F first
+#define S second
+#define pb push_back
+
+using namespace std;
+
+bool cmp(pair<pair<int,int>,int> p1, pair<pair<int,int>,int> p2)
+{
+    if(p1.F.S!=p2.F.S)
+    {
+        return p1.F.S < p2.F.S;
+    }
+    return p1.S > p2.S;
+}
+
+int main()
+{
+    int tc;
+    cin >> tc;
+    for(int t=1;t<=tc;t++)
+    {
+        int n;
+        cin >> n;
+        vector<pair<pair<int,int>,int>> v;
+        int x,y;
+        for(int i=0;i<n;i++)
+        {
+            cin >> x >> y;
+            v.pb({{i,x},0});
+            v.pb({{i,y},1});
+        }
+        sort(v.begin(),v.end(),cmp);
+        int c = 1;
+        int j = 1;
+        map<int,char> mp;
+        bool impossible = false;
+        for(int i=0;i<v.size();i++)
+        {
+            if(v[i].S==0)
+            {
+                if(j==0 && c==0)
+                {
+                    impossible = true;
+                    break;
+                }
+                else
+                {
+                    if(j==1)
+                    {
+                        mp[v[i].F.F] = 'J';
+                        j = 0;
+                    }
+                    else
+                    {
+                        mp[v[i].F.F] = 'C';
+                        c = 0;
+                    }
+                }
+            }
+            else
+            {
+                if(mp[v[i].F.F]=='J')
+                {
+                    j = 1;
+                }
+                else
+                {
+                    c = 1;
+                }
+            }
+        }
+        if(impossible)
+        {
+            printf("Case #%d: IMPOSSIBLE\n",t);
+        }
+        else
+        {
+            string ans = "";
+            for(auto it=mp.begin();it!=mp.end();it++)
+            {
+                string tmp(1,it->S);
+                ans += tmp;
+            }
+            printf("Case #%d: %s\n",t,ans.c_str());
+        }
+    }
+}
