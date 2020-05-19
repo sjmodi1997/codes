@@ -1,0 +1,55 @@
+#include <bits/stdc++.h>
+#define ll long long
+#define mp make_pair
+#define pb push_back
+#define F first
+#define S second
+
+
+using namespace std;
+bool isPerfectSquare(long double x) 
+{  
+    
+  long double sr = sqrt(x);
+  return ((sr - floor(sr)) == 0); 
+} 
+ 
+int main() {
+	int tc;
+	cin >> tc;
+	for(int t=1;t<=tc;t++)
+	{
+	    ll n;
+	    cin >> n;
+	    ll a[n];
+	    for(int i=0;i<n;i++)
+	    {
+	        cin >> a[i];
+	    }
+	    int prefix[n];
+	    memset(prefix,0,sizeof(prefix));
+	    prefix[0] = a[0];
+	    for(int i=1;i<n;i++)
+	    {
+	        prefix[i] = prefix[i-1] + a[i];
+	    }
+	    int ans = 0;
+	    for(int i=0;i<n;i++)
+	    {
+	        ll sum = 0;
+	        for(int j=i;j<n;j++)
+	        {
+	            sum += a[j];
+	            if(sum>=0)
+	            {
+	                if(isPerfectSquare((long double)sum))
+	                {
+	                    ans++;
+	                }
+	            }
+	        }
+	    }
+	    printf("Case #%d: %d\n",t,ans);
+	}
+	return 0;
+}
