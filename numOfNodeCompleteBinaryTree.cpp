@@ -1,83 +1,88 @@
-Struct TreeNode
-{
-	Int val;
-	Struct TreeNode *right;
-	Struct TreeNode *left;
-} ;
-
-Bool check(int mid,TreeNode* root)
-{
-	String path = “”;
-	while(mid)
-  {
-	  if(mid%2==0)
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    bool check(TreeNode* root,int mid)
     {
-	    Path += “L”;
-	  } 
-    Else
-    {
-      path += “R”;
+        int temp = mid;
+        string path = "";
+        while(mid!=1)
+        {
+          if(mid%2==0)
+          {
+            path += "L";
+          } 
+          else
+          {
+            path += "R";
+          }
+          mid = mid/2;
+        }
+        reverse(path.begin(),path.end());
+        //cout << temp << " " << path << endl;
+        TreeNode* curr =  root;
+        for(int i=0;i<path.size();i++)
+        {
+          if(path[i]=='L')
+          {
+            curr = curr->left;
+          }
+          else
+          {
+            curr = curr->right;
+          }
+          if(curr==NULL)
+          {
+              return false;
+          } 
+        }
+        return true;
     }
-	}
-	reverse(path.begin(),path.end());
-	TreeNode* curr =  head;
-	for(int i=0;i<path.size();i++)
-  {
-	  if(curr=NULL)
-	  {
-		  Return false;
-    } 
-    if(path[i]==”L”)
+
+    int getHeight(TreeNode* root)
     {
-	    Curr = curr->left;
+        if(root==NULL)
+        {
+            return 0;
+        }
+        int leftHeight = getHeight(root->left);
+        return leftHeight+1;
     }
-    Else
-    {
-	    Curr = curr->right;
-    }	
-	}
-	Return true;
-}
 
-Int getHeight(TreeNode* root)
-{
-	if(root==NULL)
-	{
-		Return 0;
-  }
-  Int leftHeight = getHeight(root->left);
-  Return leftHeight+1;
-}
-
-Int getSize(TreeNode* root)
-{
-	if(!root)
-		Return -1;
-	if(root->left==NULL && root->right==NULL)
- 		Return 0;
-	Int height  = getHeight(root);
-	Int low = pow(2,height-1)-1;
-	Int high = pow(2,height)-1 ;
-	Int mid;
-	Int ans = -1;
-	while(low<=high)
-	{
-		Mid = (low+high)/2;
-		if(check(root,mid))
-		{
-			Ans = mid;
-			Low = mid+1;
-		}
-		Else
+    int countNodes(TreeNode* root)
     {
-	    High = mid-1;
+        if(!root)
+            return 0;
+        if(root->left==NULL && root->right==NULL)
+            return 1;
+        int height  = getHeight(root);
+        int low = pow(2,height-1);
+        int high = pow(2,height)-1 ;
+        
+        int mid;
+        int ans = -1;
+        while(low<=high)
+        {
+            mid = (low+high)/2;
+            if(check(root,mid))
+            {
+                ans = mid;
+                low = mid+1;
+            }
+            else
+            {
+                high = mid-1;
+            }
+        }
+        return ans;
     }
-  }
-  Return ans;
-}
-
-Int main()
-{
-	TreeNode *root //;
-	Int size_of_tree = getSize(root);
-}
+};
